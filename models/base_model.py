@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """Defines the BaseModel class."""
+import models
 from uuid import uuid4
 from datetime import datetime
 
@@ -26,6 +27,8 @@ class BaseModel:
                     setattr(self, key, datetime.strptime(value, time_format))
                 else:
                     setattr(self, key, value)
+        else:
+            models.storage.new(self)
 
     def save(self):
         """Update updated_at with the current datetime."""
