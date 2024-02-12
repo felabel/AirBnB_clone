@@ -20,6 +20,8 @@ class BaseModel:
         self.updated_at = datetime.today()
         if kwargs:
             for key, value in kwargs.items():
+                if key == "__class__":
+                    continue
                 if key == "created_at" or key == "updated_at":
                     setattr(self, key, datetime.strptime(value, time_format))
                 else:
