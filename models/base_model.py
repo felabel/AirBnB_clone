@@ -14,20 +14,16 @@ class BaseModel:
             *args (any): Unused.
             **kwargs (dict): Key/value pairs of attributes.
         """
-        timeformat = "%Y-%m-%dT%H:%M:%S.%f"
+        time_format = "%Y-%m-%dT%H:%M:%S.%f"
         self.id = str(uuid4())
         self.created_at = datetime.today()
         self.updated_at = datetime.today()
-        if len(kwargs) != 0:
+        if kwargs:
             for key, value in kwargs.items():
                 if key == "created_at" or key == "updated_at":
-                    setattr(self, key, datetime.strptime(value, timeformat))
+                    setattr(self, key, datetime.strptime(value, time_format))
                 else:
                     setattr(self, key, value)
-        else:
-            self.id = str(uuid4())
-            self.created_at = datetime.today()
-            self.updated_at = datetime.today()
 
     def save(self):
         """Update updated_at with the current datetime."""
@@ -46,5 +42,5 @@ class BaseModel:
 
     def __str__(self):
         """Return the print/str representation of the BaseModel instance."""
-        clname = self.__class__.__name__
-        return "[{}] ({}) {}".format(clname, self.id, self.__dict__)
+        class_name = self.__class__.__name__
+        return "[{}] ({}) {}".format(class_name, self.id, self.__dict__)
